@@ -85,13 +85,13 @@ public class DecisionTree {
     }
 
 
-    private int getBestFeatureIndex(int[] candiateFeatureIndexs, DataSet dataset) {
+    private int getBestFeatureIndex(int[] candidateFeatureIndex, DataSet dataset) {
         double maxInfoGain = Double.MIN_VALUE;
         int bestFeatureIndex = 0;
         double entropy = EntropyUtils.getEntropy(dataset.getLabels());
 
-        for (int i = 0; i < candiateFeatureIndexs.length; i++) {
-            int featureIndex = candiateFeatureIndexs[i];
+        for (int i = 0; i < candidateFeatureIndex.length; i++) {
+            int featureIndex = candidateFeatureIndex[i];
             double infoGain = getInformationGain(entropy, featureIndex, dataset);
             if (infoGain > maxInfoGain) {
                 maxInfoGain = infoGain;

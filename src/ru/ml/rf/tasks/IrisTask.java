@@ -30,9 +30,8 @@ public class IrisTask {
         DataSet all = new DataSet(allData.first, labels);
         TestTrain testTrain = new TestTrain(all, (int) (all.getSize() * 0.7), new Random(all.getSize()));
 
-        RandomForest rf = new RandomForest(new DataSet(testTrain.getTrain().getTrainingData()), 100, allData.getFirst().get(0).length);
-
-        DataSet test = testTrain.getTest();
+        RandomForest rf = new RandomForest(new DataSet(testTrain.train.getTrainingData()), 100, allData.getFirst().get(0).length);
+        DataSet test = testTrain.test;
 
         int correct = 0;
         int total = 0;
@@ -64,7 +63,7 @@ public class IrisTask {
                 }
 
                 String[] features = input.split(",");
-                double[] sample = new double[features.length];
+                double[] sample = new double[features.length - 1];
                 for (int i = 0; i < features.length - 1; i++){
                     sample[i] = Double.parseDouble(features[i]);
                 }

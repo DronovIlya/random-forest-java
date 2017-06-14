@@ -58,4 +58,13 @@ public class DataSet {
     public List<Instance> getTrainingData() {
         return trainingData;
     }
+
+    @Override
+    public String toString() {
+        return "DataSet{" +
+                "trainingData=" + trainingData +
+                ", numOfInstance=" + numOfInstance +
+                ", numOfFeatures=" + numOfFeatures +
+                '}';
+    }
 }
