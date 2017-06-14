@@ -39,7 +39,7 @@ public class RandomForest {
 
     public void createRandomForest() {
         for (int i = 0; i < numTrees; i++) {
-            System.out.println("creating " + i + "th tree");
+            // System.out.println("creating " + i + "th tree");
             DecisionTree dt = new DecisionTree();
             dt.setTreeMinSize(TREE_MIN_SIZE);
             dt.buildTree(getBootStrapData(), sampleFeatureSize);
