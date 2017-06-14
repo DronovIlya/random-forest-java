@@ -1,3 +1,5 @@
 .idea/
 *.iml
-out/
+out/*
+!/out/artifacts
+!/out/artifacts/iris_random_forest_jar/iris-random-forest.jar
