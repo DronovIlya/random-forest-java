@@ -10,6 +10,7 @@ import ru.ml.rf.utils.SamplerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class DecisionTree {
@@ -179,7 +180,7 @@ public class DecisionTree {
 
     private boolean hasSameLabel(List<Integer> labels) {
         for (int i = 1; i < labels.size(); i++) {
-            if (labels.get(i) != labels.get(i - 1))
+            if (!Objects.equals(labels.get(i), labels.get(i - 1)))
                 return false;
         }
         return true;
