@@ -78,7 +78,7 @@ public class RandomForest {
      * labels.
      */
     public double[] predictDist(double[] featureVector) {
-        int totalNumLabels = 2;
+        int totalNumLabels = 3;
         double[] finalPredict = new double[totalNumLabels];
         // iterate through each decision tree, and make prediction. 
         for (int i = 0; i < numTrees; i++) {
