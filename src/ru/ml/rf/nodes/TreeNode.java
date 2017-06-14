@@ -1,15 +1,10 @@
 package ru.ml.rf.nodes;
 
-/**
- * Empty interface on purpose. 
- * 
- * @author wenzhe
- *
- */
-public abstract class TreeNode {   
+public abstract class TreeNode {
+
     protected int depth;
-    
-    public TreeNode(){
+
+    public TreeNode() {
         depth = 0;
     }
 }
