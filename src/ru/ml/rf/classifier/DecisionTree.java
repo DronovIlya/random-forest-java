@@ -26,13 +26,14 @@ public class DecisionTree {
 
     // minimum size of subtree, this value can be used as condition for termination.
     // by default, we set the size as 10.
-    private int minTreeSize = 10;
+    private int minSamplesLeaf = 10;
 
     DecisionTree() {
     }
 
-    void buildTree(DataSet dataset, int maxFeatures) {
+    void buildTree(DataSet dataset, int maxFeatures, int minSamplesLeaf) {
         this.maxFeatures = maxFeatures;
+        this.minSamplesLeaf = minSamplesLeaf;
         root = build(dataset);
     }
 
@@ -71,7 +72,7 @@ public class DecisionTree {
 
     private TreeNode build(DataSet dataset) {
         // create a new leaf node if either of condition met. 
-        if (dataset.getNumOfInstance() < minTreeSize || hasSameLabel(dataset.getLabels())) {
+        if (dataset.getNumOfInstance() < minSamplesLeaf || hasSameLabel(dataset.getLabels())) {
             return new LeafNode(numLabels, dataset.getLabels());
         }
 
@@ -191,6 +192,6 @@ public class DecisionTree {
     }
 
     public void setTreeMinSize(int minTreeSize) {
-        this.minTreeSize = minTreeSize;
+        this.minSamplesLeaf = minTreeSize;
     }
 }

@@ -4,10 +4,7 @@ import ru.ml.rf.classifier.RandomForest;
 import ru.ml.rf.datasets.DataSet;
 import ru.ml.rf.datasets.Instance;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +16,15 @@ public class RandomForestTask {
      * args[0] = fold or dataset, e.g. train
      * args[1] = fold or dataset, e.g. test
      * args[2] = n_estimators
+     * args[3] = max_features
+     * args[4] = min_samples_leaf
      */
     public static void main(String[] args) throws IOException {
         RandomForestTask irisTask = new RandomForestTask();
+
+        int estimators = args.length >= 3 ? Integer.parseInt(args[2]) : 100;
+        int maxFeatures = args.length >= 4 ? Integer.parseInt(args[3]) : 8;
+        int minSamplesLeaf = args.length >= 5 ? Integer.parseInt(args[4]) : 1;
 
         Pair<List<double[]>, List<Integer>> trainData = irisTask.getData(args[0]);
         Pair<List<double[]>, List<Integer>> testData = irisTask.getData(args[1]);
@@ -29,7 +32,7 @@ public class RandomForestTask {
         DataSet train = new DataSet(trainData.first, trainData.second);
         DataSet test = new DataSet(testData.first, testData.second);
 
-        RandomForest rf = new RandomForest(new DataSet(train.getTrainingData()), Integer.parseInt(args[2]), 8);
+        RandomForest rf = new RandomForest(new DataSet(train.getTrainingData()), estimators, maxFeatures, minSamplesLeaf);
 
         int correct = 0;
         int total = 0;
