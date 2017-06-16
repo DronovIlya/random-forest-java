@@ -20,7 +20,7 @@ public class DecisionTree {
 
     // for each node, we randomly select subset of features to consider for splitting
     // by default, we set the size as square root of total number of features.  
-    private int sampleFeatureSize;
+    private int maxFeatures;
 
     private int numLabels = 3;
 
@@ -31,8 +31,8 @@ public class DecisionTree {
     DecisionTree() {
     }
 
-    void buildTree(DataSet dataset, int sampleFeatureSize) {
-        this.sampleFeatureSize = sampleFeatureSize;
+    void buildTree(DataSet dataset, int maxFeatures) {
+        this.maxFeatures = maxFeatures;
         root = build(dataset);
     }
 
@@ -76,10 +76,10 @@ public class DecisionTree {
         }
 
         // sub-sample the attributes. 
-        int[] selectedFeatureIndexs = SamplerUtils.randSample(dataset.getNumOfFeatures(), sampleFeatureSize);
+        int[] selectedFeatureIndexes = SamplerUtils.randSample(dataset.getNumOfFeatures(), maxFeatures);
 
         // select the best feature based on information gain
-        int bestFeatureIndex = getBestFeatureIndex(selectedFeatureIndexs, dataset);
+        int bestFeatureIndex = getBestFeatureIndex(selectedFeatureIndexes, dataset);
 
         // for numerical attribute, we  create left and right child. 
         return createDecisionNode(bestFeatureIndex, dataset);
@@ -186,8 +186,8 @@ public class DecisionTree {
         return true;
     }
 
-    public void setSampleFeatureSize(int sampleFeatureSize) {
-        this.sampleFeatureSize = sampleFeatureSize;
+    public void setMaxFeatures(int maxFeatures) {
+        this.maxFeatures = maxFeatures;
     }
 
     public void setTreeMinSize(int minTreeSize) {

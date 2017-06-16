@@ -3,7 +3,6 @@ package ru.ml.rf.tasks;
 import ru.ml.rf.classifier.RandomForest;
 import ru.ml.rf.datasets.DataSet;
 import ru.ml.rf.datasets.Instance;
-import ru.ml.rf.datasets.TestTrain;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -11,27 +10,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class IrisTask {
+public class RandomForestTask {
 
     private static final String TRAIN_DATA = "comparison/data_prepared/spine.csv";
 
+    /**
+     * args[0] = fold or dataset, e.g. train
+     * args[1] = fold or dataset, e.g. test
+     * args[2] = n_estimators
+     */
     public static void main(String[] args) throws IOException {
-        IrisTask irisTask = new IrisTask();
+        RandomForestTask irisTask = new RandomForestTask();
 
-        Pair<List<double[]>, List<Integer>> allData = irisTask.getData(TRAIN_DATA);
+        Pair<List<double[]>, List<Integer>> trainData = irisTask.getData(args[0]);
+        Pair<List<double[]>, List<Integer>> testData = irisTask.getData(args[1]);
 
-//        List<String> uniqueLabels = new ArrayList<>(new HashSet<>(allData.second));
-//        List<Integer> labels = allData.second.stream().map(uniqueLabels::indexOf).collect(Collectors.toList());
+        DataSet train = new DataSet(trainData.first, trainData.second);
+        DataSet test = new DataSet(testData.first, testData.second);
 
-        DataSet all = new DataSet(allData.first, allData.second);
-        TestTrain testTrain = new TestTrain(all, (int) (all.getSize() * 0.7), new Random(all.getSize()));
-
-        System.out.println(testTrain.train.getSize() + ", test = " + testTrain.test.getSize());
-
-        RandomForest rf = new RandomForest(new DataSet(testTrain.train.getTrainingData()), 100, 10);
-        DataSet test = testTrain.test;
+        RandomForest rf = new RandomForest(new DataSet(train.getTrainingData()), Integer.parseInt(args[2]), 8);
 
         int correct = 0;
         int total = 0;
@@ -44,11 +42,11 @@ public class IrisTask {
             total++;
         }
 
-        System.out.println("accuracy = " + ((double) correct / total));
+        System.out.println(((double) correct / total));
     }
 
     private Pair<List<double[]>, List<Integer>> getData(String path) throws IOException {
-        System.out.println("read dataset from " + path);
+//        System.out.println("read dataset from " + path);
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             int count = -1;
@@ -58,9 +56,6 @@ public class IrisTask {
             String input;
             while ((input = in.readLine()) != null) {
                 count++;
-                if (count == 0) {
-                    continue;
-                }
 
                 String[] features = input.split(",");
                 double[] sample = new double[features.length - 1];

@@ -13,7 +13,7 @@ public class RandomForest {
     private List<DecisionTree> decisionTrees;
 
     // size of sampling for each bootstrap step. 
-    private int sampleFeatureSize;
+    private int maxFeatures;
 
     // minimum number of samples for each node. If reached the minimum, we just make it as
     // leaf node without further splitting. 
@@ -25,14 +25,14 @@ public class RandomForest {
         this.dataset = dataset;
         numTrees = 100;
         decisionTrees = new ArrayList<>(numTrees);
-        this.sampleFeatureSize = 20;
+        this.maxFeatures = 20;
         createRandomForest();
     }
 
-    public RandomForest(DataSet dataset, int numTrees, int sampleFeatureSize) {
+    public RandomForest(DataSet dataset, int numTrees, int maxFeatures) {
         this.dataset = dataset;
         this.numTrees = numTrees;
-        this.sampleFeatureSize = sampleFeatureSize;
+        this.maxFeatures = maxFeatures;
         decisionTrees = new ArrayList<>(numTrees);
         createRandomForest();
     }
@@ -41,7 +41,7 @@ public class RandomForest {
         for (int i = 0; i < numTrees; i++) {
             DecisionTree dt = new DecisionTree();
             dt.setTreeMinSize(TREE_MIN_SIZE);
-            dt.buildTree(getBootStrapData(), sampleFeatureSize);
+            dt.buildTree(getBootStrapData(), maxFeatures);
 
             decisionTrees.add(dt);
         }
